@@ -111,7 +111,7 @@ SME-Connect/
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/your-username/SME-Connect.git
+   git clone https://github.com/siyabongamasiya/SME-Connect.git
    cd SME-Connect
    ```
 
