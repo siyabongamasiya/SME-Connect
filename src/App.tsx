@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { LandingPage } from './components/LandingPage';
+import { SMEDashboard } from './components/SMEDashboard';
+import { CustomerDiscovery } from './components/CustomerDiscovery';
+import { BusinessProfile } from './components/BusinessProfile';
+import { EngagementPage } from './components/EngagementPage';
+import { AnalyticsDashboard } from './components/AnalyticsDashboard';
+import { USSDFlow } from './components/USSDFlow';
+import './styles/globals.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export type PageType = 'landing' | 'sme-dashboard' | 'customer-discovery' | 'business-profile' | 'engagement' | 'analytics' | 'ussd';
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState<PageType>('landing');
+  const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
+
+  const navigateTo = (page: PageType, businessId?: string) => {
+    setCurrentPage(page);
+    if (businessId) setSelectedBusinessId(businessId);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-background">
+      {currentPage === 'landing' && <LandingPage onNavigate={navigateTo} />}
+      {currentPage === 'sme-dashboard' && <SMEDashboard onNavigate={navigateTo} />}
+      {currentPage === 'customer-discovery' && <CustomerDiscovery onNavigate={navigateTo} />}
+      {currentPage === 'business-profile' && <BusinessProfile onNavigate={navigateTo} businessId={selectedBusinessId} />}
+      {currentPage === 'engagement' && <EngagementPage onNavigate={navigateTo} />}
+      {currentPage === 'analytics' && <AnalyticsDashboard onNavigate={navigateTo} />}
+      {currentPage === 'ussd' && <USSDFlow onNavigate={navigateTo} />}
+    </div>
+  );
 }
-
-export default App
